@@ -1,0 +1,7 @@
+name: ub-pollution
+dependencies:
+- python=3
+- numpy
+- pandas
+- matplotlib
+- datetime
