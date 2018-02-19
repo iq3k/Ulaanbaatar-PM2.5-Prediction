@@ -944,6 +944,7 @@ X_test.shape, y_test.shape
 # 
 # **Regression**
 # - Linear regression
+# - Neural network regression
 # - Decision forest
 # - Boosted decision tree
 # 
