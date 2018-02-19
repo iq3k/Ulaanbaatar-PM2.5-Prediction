@@ -944,6 +944,7 @@ X_test.shape, y_test.shape
 # 
 # **Regression**
 # - Linear regression
+# - Neural network regression
 # - Decision forest
 # - Boosted decision tree
 # 
@@ -952,6 +953,85 @@ X_test.shape, y_test.shape
 # - Multiclass logistic regression
 # - Multiclass decision forest
 # - Multiclass decision jungle
+
+# ## Regression
+
+# ### Linear Regression
+
+# In[288]:
+
+
+from sklearn import linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Create linear regression object
+regr = linear_model.LinearRegression()
+
+
+# In[289]:
+
+
+# Train the model using the training sets
+regr.fit(X_train, y_train)
+
+
+# In[ ]:
+
+
+# Make predictions using the testing set
+y_pred = regr.predict(X_test)
+
+
+# In[ ]:
+
+
+# The coefficients
+print('Coefficients: \n', regr.coef_)
+# The mean squared error
+print("Mean squared error: %.2f"
+      % mean_squared_error(y_test, y_pred))
+# Explained variance score: 1 is perfect prediction
+print('Variance score: %.2f' % r2_score(y_test, y_pred))
+
+
+# In[ ]:
+
+
+# Plot outputs
+plt.scatter(X_test, y_test,  color='black')
+plt.plot(X_test, y_pred, color='blue', linewidth=3)
+
+plt.xticks(())
+plt.yticks(())
+
+plt.show()
+
+
+# ### Neural Network Regression
+
+# ### Decision Forest
+
+# ### Boosted Decision Tree
+
+# ## Classification
+
+# ### Multiclass neural network
+
+# ### Multiclass logistic regression
+
+# ### Multiclass decision forest
+
+# ### Multiclass decision jungle
+
+# Neural network regression
+# Decision forest
+# Boosted decision tree
+# Classification
+# 
+# Multiclass neural network
+# Multiclass logistic regression
+# Multiclass decision forest
+# Multiclass decision jungle
 
 # # Evaluate Models
 

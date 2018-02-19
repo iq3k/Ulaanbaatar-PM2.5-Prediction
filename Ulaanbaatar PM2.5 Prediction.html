@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>2018-02-19-rr-data-clean</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Ulaanbaatar PM2.5 Prediction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -35235,6 +35235,231 @@ Name: Value, dtype: float64</pre>
 <li>Multiclass decision forest</li>
 <li>Multiclass decision jungle</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Regression">Regression<a class="anchor-link" href="#Regression">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Linear-Regression">Linear Regression<a class="anchor-link" href="#Linear-Regression">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[288]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="c1"># Create linear regression object</span>
+<span class="n">regr</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[289]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Train the model using the training sets</span>
+<span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-289-5a78c47b7660&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-red-intense-fg ansi-bold"># Train the model using the training sets</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 2</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>regr<span class="ansi-yellow-intense-fg ansi-bold">.</span>fit<span class="ansi-yellow-intense-fg ansi-bold">(</span>X_train<span class="ansi-yellow-intense-fg ansi-bold">,</span> y_train<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-green-intense-fg ansi-bold">C:\ProgramData\Anaconda3\lib\site-packages\sklearn\linear_model\base.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-intense-fg ansi-bold">(self, X, y, sample_weight)</span>
+<span class="ansi-green-fg">    480</span>         n_jobs_ <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>n_jobs
+<span class="ansi-green-fg">    481</span>         X, y = check_X_y(X, y, accept_sparse=[&#39;csr&#39;, &#39;csc&#39;, &#39;coo&#39;],
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 482</span><span class="ansi-yellow-intense-fg ansi-bold">                          y_numeric=True, multi_output=True)
+</span><span class="ansi-green-fg">    483</span> 
+<span class="ansi-green-fg">    484</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> sample_weight <span class="ansi-green-intense-fg ansi-bold">is</span> <span class="ansi-green-intense-fg ansi-bold">not</span> <span class="ansi-green-intense-fg ansi-bold">None</span> <span class="ansi-green-intense-fg ansi-bold">and</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>atleast_1d<span class="ansi-yellow-intense-fg ansi-bold">(</span>sample_weight<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>ndim <span class="ansi-yellow-intense-fg ansi-bold">&gt;</span> <span class="ansi-cyan-intense-fg ansi-bold">1</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+
+<span class="ansi-green-intense-fg ansi-bold">C:\ProgramData\Anaconda3\lib\site-packages\sklearn\utils\validation.py</span> in <span class="ansi-cyan-fg">check_X_y</span><span class="ansi-blue-intense-fg ansi-bold">(X, y, accept_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, warn_on_dtype, estimator)</span>
+<span class="ansi-green-fg">    571</span>     X = check_array(X, accept_sparse, dtype, order, copy, force_all_finite,
+<span class="ansi-green-fg">    572</span>                     ensure_2d<span class="ansi-yellow-intense-fg ansi-bold">,</span> allow_nd<span class="ansi-yellow-intense-fg ansi-bold">,</span> ensure_min_samples<span class="ansi-yellow-intense-fg ansi-bold">,</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 573</span><span class="ansi-yellow-intense-fg ansi-bold">                     ensure_min_features, warn_on_dtype, estimator)
+</span><span class="ansi-green-fg">    574</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> multi_output<span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">    575</span>         y = check_array(y, &#39;csr&#39;, force_all_finite=True, ensure_2d=False,
+
+<span class="ansi-green-intense-fg ansi-bold">C:\ProgramData\Anaconda3\lib\site-packages\sklearn\utils\validation.py</span> in <span class="ansi-cyan-fg">check_array</span><span class="ansi-blue-intense-fg ansi-bold">(array, accept_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, warn_on_dtype, estimator)</span>
+<span class="ansi-green-fg">    446</span>         <span class="ansi-red-intense-fg ansi-bold"># make sure we actually converted to numeric:</span>
+<span class="ansi-green-fg">    447</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> dtype_numeric <span class="ansi-green-intense-fg ansi-bold">and</span> array<span class="ansi-yellow-intense-fg ansi-bold">.</span>dtype<span class="ansi-yellow-intense-fg ansi-bold">.</span>kind <span class="ansi-yellow-intense-fg ansi-bold">==</span> <span class="ansi-blue-intense-fg ansi-bold">&#34;O&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 448</span><span class="ansi-yellow-intense-fg ansi-bold">             </span>array <span class="ansi-yellow-intense-fg ansi-bold">=</span> array<span class="ansi-yellow-intense-fg ansi-bold">.</span>astype<span class="ansi-yellow-intense-fg ansi-bold">(</span>np<span class="ansi-yellow-intense-fg ansi-bold">.</span>float64<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    449</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> <span class="ansi-green-intense-fg ansi-bold">not</span> allow_nd <span class="ansi-green-intense-fg ansi-bold">and</span> array<span class="ansi-yellow-intense-fg ansi-bold">.</span>ndim <span class="ansi-yellow-intense-fg ansi-bold">&gt;=</span> <span class="ansi-cyan-intense-fg ansi-bold">3</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">    450</span>             raise ValueError(&#34;Found array with dim %d. %s expected &lt;= 2.&#34;
+
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>: could not convert string to float: &#39;V&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make predictions using the testing set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The coefficients</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coefficients: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">regr</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="c1"># The mean squared error</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean squared error: </span><span class="si">%.2f</span><span class="s2">&quot;</span>
+      <span class="o">%</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="c1"># Explained variance score: 1 is perfect prediction</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Variance score: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plot outputs</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Neural-Network-Regression">Neural Network Regression<a class="anchor-link" href="#Neural-Network-Regression">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Decision-Forest">Decision Forest<a class="anchor-link" href="#Decision-Forest">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Boosted-Decision-Tree">Boosted Decision Tree<a class="anchor-link" href="#Boosted-Decision-Tree">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Classification">Classification<a class="anchor-link" href="#Classification">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multiclass-neural-network">Multiclass neural network<a class="anchor-link" href="#Multiclass-neural-network">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multiclass-logistic-regression">Multiclass logistic regression<a class="anchor-link" href="#Multiclass-logistic-regression">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multiclass-decision-forest">Multiclass decision forest<a class="anchor-link" href="#Multiclass-decision-forest">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multiclass-decision-jungle">Multiclass decision jungle<a class="anchor-link" href="#Multiclass-decision-jungle">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neural network regression
+Decision forest
+Boosted decision tree
+Classification</p>
+<p>Multiclass neural network
+Multiclass logistic regression
+Multiclass decision forest
+Multiclass decision jungle</p>
 
 </div>
 </div>
