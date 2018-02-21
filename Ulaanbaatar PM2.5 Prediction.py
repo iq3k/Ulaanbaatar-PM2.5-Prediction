@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # <h1>Table of Contents<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Ulaanbaatar-PM2.5-Prediction" data-toc-modified-id="Ulaanbaatar-PM2.5-Prediction-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Ulaanbaatar PM2.5 Prediction</a></span></li><li><span><a href="#Importing-data-and-assumptions" data-toc-modified-id="Importing-data-and-assumptions-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Importing data and assumptions</a></span></li><li><span><a href="#Visualizing-Features" data-toc-modified-id="Visualizing-Features-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Visualizing Features<a name="visualize"></a></a></span><ul class="toc-item"><li><span><a href="#Determinations-made-from-visualizations" data-toc-modified-id="Determinations-made-from-visualizations-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Determinations made from visualizations</a></span></li></ul></li><li><span><a href="#Clean-Data" data-toc-modified-id="Clean-Data-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Clean Data</a></span><ul class="toc-item"><li><span><a href="#Drop-unnecessary-features" data-toc-modified-id="Drop-unnecessary-features-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>Drop unnecessary features</a></span></li><li><span><a href="#Value-vs-AQI" data-toc-modified-id="Value-vs-AQI-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>Value vs AQI</a></span></li><li><span><a href="#Drop-extra-date/time-columns" data-toc-modified-id="Drop-extra-date/time-columns-4.3"><span class="toc-item-num">4.3&nbsp;&nbsp;</span>Drop extra date/time columns</a></span></li><li><span><a href="#Create-canonical-date-feature" data-toc-modified-id="Create-canonical-date-feature-4.4"><span class="toc-item-num">4.4&nbsp;&nbsp;</span>Create canonical date feature</a></span></li><li><span><a href="#Handling-outliers" data-toc-modified-id="Handling-outliers-4.5"><span class="toc-item-num">4.5&nbsp;&nbsp;</span>Handling outliers</a></span></li><li><span><a href="#Handle-NaNs" data-toc-modified-id="Handle-NaNs-4.6"><span class="toc-item-num">4.6&nbsp;&nbsp;</span>Handle NaNs</a></span></li><li><span><a href="#Handle-990-DIR-Values" data-toc-modified-id="Handle-990-DIR-Values-4.7"><span class="toc-item-num">4.7&nbsp;&nbsp;</span>Handle 990 DIR Values</a></span></li></ul></li><li><span><a href="#Feature-Engineering" data-toc-modified-id="Feature-Engineering-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Feature Engineering</a></span><ul class="toc-item"><li><span><a href="#Convert-cyclical-&amp;-circular-features" data-toc-modified-id="Convert-cyclical-&amp;-circular-features-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Convert cyclical &amp; circular features</a></span><ul class="toc-item"><li><span><a href="#DIR" data-toc-modified-id="DIR-5.1.1"><span class="toc-item-num">5.1.1&nbsp;&nbsp;</span>DIR</a></span></li><li><span><a href="#Hour-and-Month---Convert-cyclical-feature" data-toc-modified-id="Hour-and-Month---Convert-cyclical-feature-5.1.2"><span class="toc-item-num">5.1.2&nbsp;&nbsp;</span>Hour and Month - Convert cyclical feature</a></span></li></ul></li><li><span><a href="#Convert-Value-Field-from-mg-to-µg" data-toc-modified-id="Convert-Value-Field-from-mg-to-µg-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Convert Value Field from mg to µg</a></span></li><li><span><a href="#Convert-TEMP-and-DEWP-from-F-to-C" data-toc-modified-id="Convert-TEMP-and-DEWP-from-F-to-C-5.3"><span class="toc-item-num">5.3&nbsp;&nbsp;</span>Convert TEMP and DEWP from F to C</a></span></li><li><span><a href="#Future-Actions-for-Feature-Engineering" data-toc-modified-id="Future-Actions-for-Feature-Engineering-5.4"><span class="toc-item-num">5.4&nbsp;&nbsp;</span>Future Actions for Feature Engineering</a></span><ul class="toc-item"><li><span><a href="#Previous-hour-value-feature." data-toc-modified-id="Previous-hour-value-feature.-5.4.1"><span class="toc-item-num">5.4.1&nbsp;&nbsp;</span>Previous hour value feature.</a></span></li><li><span><a href="#Moving-average-feature" data-toc-modified-id="Moving-average-feature-5.4.2"><span class="toc-item-num">5.4.2&nbsp;&nbsp;</span>Moving average feature</a></span></li><li><span><a href="#Number-of-days-since-start" data-toc-modified-id="Number-of-days-since-start-5.4.3"><span class="toc-item-num">5.4.3&nbsp;&nbsp;</span>Number of days since start</a></span></li></ul></li><li><span><a href="#Get-final-dataset" data-toc-modified-id="Get-final-dataset-5.5"><span class="toc-item-num">5.5&nbsp;&nbsp;</span>Get final dataset</a></span></li></ul></li><li><span><a href="#Split-into-Training-and-Test-Data" data-toc-modified-id="Split-into-Training-and-Test-Data-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Split into Training and Test Data</a></span><ul class="toc-item"><li><span><a href="#Prepare-Data-Set-for-Regression" data-toc-modified-id="Prepare-Data-Set-for-Regression-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Prepare Data Set for Regression</a></span></li><li><span><a href="#Prepare-Data-Set-for-Classification" data-toc-modified-id="Prepare-Data-Set-for-Classification-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Prepare Data Set for Classification</a></span></li></ul></li><li><span><a href="#Implement-ML-Algorithms" data-toc-modified-id="Implement-ML-Algorithms-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Implement ML Algorithms</a></span><ul class="toc-item"><li><span><a href="#Regression" data-toc-modified-id="Regression-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Regression</a></span><ul class="toc-item"><li><span><a href="#Linear-Regression" data-toc-modified-id="Linear-Regression-7.1.1"><span class="toc-item-num">7.1.1&nbsp;&nbsp;</span>Linear Regression</a></span></li><li><span><a href="#Neural-Network-Regression" data-toc-modified-id="Neural-Network-Regression-7.1.2"><span class="toc-item-num">7.1.2&nbsp;&nbsp;</span>Neural Network Regression</a></span></li><li><span><a href="#Decision-Forest" data-toc-modified-id="Decision-Forest-7.1.3"><span class="toc-item-num">7.1.3&nbsp;&nbsp;</span>Decision Forest</a></span></li><li><span><a href="#Decision-Tree-+-AdaBoost" data-toc-modified-id="Decision-Tree-+-AdaBoost-7.1.4"><span class="toc-item-num">7.1.4&nbsp;&nbsp;</span>Decision Tree + AdaBoost</a></span></li></ul></li><li><span><a href="#Classification" data-toc-modified-id="Classification-7.2"><span class="toc-item-num">7.2&nbsp;&nbsp;</span>Classification</a></span><ul class="toc-item"><li><span><a href="#Multiclass-neural-network" data-toc-modified-id="Multiclass-neural-network-7.2.1"><span class="toc-item-num">7.2.1&nbsp;&nbsp;</span>Multiclass neural network</a></span></li><li><span><a href="#Multiclass-logistic-regression" data-toc-modified-id="Multiclass-logistic-regression-7.2.2"><span class="toc-item-num">7.2.2&nbsp;&nbsp;</span>Multiclass logistic regression</a></span></li><li><span><a href="#Multiclass-decision-forest" data-toc-modified-id="Multiclass-decision-forest-7.2.3"><span class="toc-item-num">7.2.3&nbsp;&nbsp;</span>Multiclass decision forest</a></span></li><li><span><a href="#Multiclass-decision-jungle" data-toc-modified-id="Multiclass-decision-jungle-7.2.4"><span class="toc-item-num">7.2.4&nbsp;&nbsp;</span>Multiclass decision jungle</a></span></li></ul></li></ul></li><li><span><a href="#Evaluate-Models" data-toc-modified-id="Evaluate-Models-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Evaluate Models</a></span></li><li><span><a href="#To-Do" data-toc-modified-id="To-Do-9"><span class="toc-item-num">9&nbsp;&nbsp;</span>To Do</a></span></li></ul></div>
+# <div class="toc"><ul class="toc-item"><li><span><a href="#Ulaanbaatar-PM2.5-Prediction" data-toc-modified-id="Ulaanbaatar-PM2.5-Prediction-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Ulaanbaatar PM2.5 Prediction</a></span></li><li><span><a href="#Importing-data-and-assumptions" data-toc-modified-id="Importing-data-and-assumptions-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Importing data and assumptions</a></span></li><li><span><a href="#Visualizing-Features" data-toc-modified-id="Visualizing-Features-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Visualizing Features<a name="visualize"></a></a></span><ul class="toc-item"><li><span><a href="#Determinations-made-from-visualizations" data-toc-modified-id="Determinations-made-from-visualizations-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Determinations made from visualizations</a></span></li></ul></li><li><span><a href="#Clean-Data" data-toc-modified-id="Clean-Data-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Clean Data</a></span><ul class="toc-item"><li><span><a href="#Drop-unnecessary-features" data-toc-modified-id="Drop-unnecessary-features-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>Drop unnecessary features</a></span></li><li><span><a href="#Value-vs-AQI" data-toc-modified-id="Value-vs-AQI-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>Value vs AQI</a></span></li><li><span><a href="#Drop-extra-date/time-columns" data-toc-modified-id="Drop-extra-date/time-columns-4.3"><span class="toc-item-num">4.3&nbsp;&nbsp;</span>Drop extra date/time columns</a></span></li><li><span><a href="#Create-canonical-date-feature" data-toc-modified-id="Create-canonical-date-feature-4.4"><span class="toc-item-num">4.4&nbsp;&nbsp;</span>Create canonical date feature</a></span></li><li><span><a href="#Handling-outliers" data-toc-modified-id="Handling-outliers-4.5"><span class="toc-item-num">4.5&nbsp;&nbsp;</span>Handling outliers</a></span></li><li><span><a href="#Handle-NaNs" data-toc-modified-id="Handle-NaNs-4.6"><span class="toc-item-num">4.6&nbsp;&nbsp;</span>Handle NaNs</a></span></li><li><span><a href="#Handle-990-DIR-Values" data-toc-modified-id="Handle-990-DIR-Values-4.7"><span class="toc-item-num">4.7&nbsp;&nbsp;</span>Handle 990 DIR Values</a></span></li></ul></li><li><span><a href="#Feature-Engineering" data-toc-modified-id="Feature-Engineering-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Feature Engineering</a></span><ul class="toc-item"><li><span><a href="#Convert-cyclical-&amp;-circular-features" data-toc-modified-id="Convert-cyclical-&amp;-circular-features-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Convert cyclical &amp; circular features</a></span><ul class="toc-item"><li><span><a href="#DIR" data-toc-modified-id="DIR-5.1.1"><span class="toc-item-num">5.1.1&nbsp;&nbsp;</span>DIR</a></span></li><li><span><a href="#Hour-and-Month---Convert-cyclical-feature" data-toc-modified-id="Hour-and-Month---Convert-cyclical-feature-5.1.2"><span class="toc-item-num">5.1.2&nbsp;&nbsp;</span>Hour and Month - Convert cyclical feature</a></span></li></ul></li><li><span><a href="#Convert-Value-Field-from-mg-to-µg" data-toc-modified-id="Convert-Value-Field-from-mg-to-µg-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Convert Value Field from mg to µg</a></span></li><li><span><a href="#Convert-TEMP-and-DEWP-from-F-to-C" data-toc-modified-id="Convert-TEMP-and-DEWP-from-F-to-C-5.3"><span class="toc-item-num">5.3&nbsp;&nbsp;</span>Convert TEMP and DEWP from F to C</a></span></li><li><span><a href="#Future-Actions-for-Feature-Engineering" data-toc-modified-id="Future-Actions-for-Feature-Engineering-5.4"><span class="toc-item-num">5.4&nbsp;&nbsp;</span>Future Actions for Feature Engineering</a></span><ul class="toc-item"><li><span><a href="#Previous-hour-value-feature." data-toc-modified-id="Previous-hour-value-feature.-5.4.1"><span class="toc-item-num">5.4.1&nbsp;&nbsp;</span>Previous hour value feature.</a></span></li><li><span><a href="#Moving-average-feature" data-toc-modified-id="Moving-average-feature-5.4.2"><span class="toc-item-num">5.4.2&nbsp;&nbsp;</span>Moving average feature</a></span></li><li><span><a href="#Number-of-days-since-start" data-toc-modified-id="Number-of-days-since-start-5.4.3"><span class="toc-item-num">5.4.3&nbsp;&nbsp;</span>Number of days since start</a></span></li></ul></li><li><span><a href="#Get-final-dataset" data-toc-modified-id="Get-final-dataset-5.5"><span class="toc-item-num">5.5&nbsp;&nbsp;</span>Get final dataset</a></span></li></ul></li><li><span><a href="#Split-into-Training-and-Test-Data" data-toc-modified-id="Split-into-Training-and-Test-Data-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Split into Training and Test Data</a></span><ul class="toc-item"><li><span><a href="#Prepare-Data-Set-for-Regression" data-toc-modified-id="Prepare-Data-Set-for-Regression-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Prepare Data Set for Regression</a></span></li><li><span><a href="#Prepare-Data-Set-for-Classification" data-toc-modified-id="Prepare-Data-Set-for-Classification-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Prepare Data Set for Classification</a></span></li></ul></li><li><span><a href="#Implement-ML-Algorithms" data-toc-modified-id="Implement-ML-Algorithms-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Implement ML Algorithms</a></span><ul class="toc-item"><li><span><a href="#Regression" data-toc-modified-id="Regression-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Regression</a></span><ul class="toc-item"><li><span><a href="#Linear-Regression" data-toc-modified-id="Linear-Regression-7.1.1"><span class="toc-item-num">7.1.1&nbsp;&nbsp;</span>Linear Regression</a></span></li><li><span><a href="#Neural-Network-Regression" data-toc-modified-id="Neural-Network-Regression-7.1.2"><span class="toc-item-num">7.1.2&nbsp;&nbsp;</span>Neural Network Regression</a></span></li><li><span><a href="#Decision-Forest" data-toc-modified-id="Decision-Forest-7.1.3"><span class="toc-item-num">7.1.3&nbsp;&nbsp;</span>Decision Forest</a></span></li><li><span><a href="#Decision-Tree-+-AdaBoost" data-toc-modified-id="Decision-Tree-+-AdaBoost-7.1.4"><span class="toc-item-num">7.1.4&nbsp;&nbsp;</span>Decision Tree + AdaBoost</a></span></li></ul></li><li><span><a href="#Classification" data-toc-modified-id="Classification-7.2"><span class="toc-item-num">7.2&nbsp;&nbsp;</span>Classification</a></span><ul class="toc-item"><li><span><a href="#Multiclass-neural-network" data-toc-modified-id="Multiclass-neural-network-7.2.1"><span class="toc-item-num">7.2.1&nbsp;&nbsp;</span>Multiclass neural network</a></span></li><li><span><a href="#Multiclass-logistic-regression" data-toc-modified-id="Multiclass-logistic-regression-7.2.2"><span class="toc-item-num">7.2.2&nbsp;&nbsp;</span>Multiclass logistic regression</a></span></li><li><span><a href="#Random-forest" data-toc-modified-id="Random-forest-7.2.3"><span class="toc-item-num">7.2.3&nbsp;&nbsp;</span>Random forest</a></span></li><li><span><a href="#Decision-Tree" data-toc-modified-id="Decision-Tree-7.2.4"><span class="toc-item-num">7.2.4&nbsp;&nbsp;</span>Decision Tree</a></span></li></ul></li></ul></li><li><span><a href="#Evaluate-Models" data-toc-modified-id="Evaluate-Models-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Evaluate Models</a></span></li><li><span><a href="#Observations" data-toc-modified-id="Observations-9"><span class="toc-item-num">9&nbsp;&nbsp;</span>Observations</a></span></li></ul></div>
 
 # # Ulaanbaatar PM2.5 Prediction
 # 
@@ -20,7 +20,7 @@
 # - The weather station is located approximately 30 kilometers away from the air quality station
 # - The location of the weather station is in the westernmost part of the valley Ulaanbaatar sits in
 
-# In[3]:
+# In[1]:
 
 
 # Import relevant items
@@ -28,7 +28,7 @@ import pandas as pd
 import numpy as np
 
 
-# In[4]:
+# In[2]:
 
 
 # Let's first load the data and take a look at what we have.
@@ -37,14 +37,14 @@ df = pd.read_csv('weather-and-aqi-v4.csv')
 
 # The head of the dataframe shows lots of columns and LOTS of NaN's.
 
-# In[5]:
+# In[3]:
 
 
 print(df.head())
 print(df.columns)
 
 
-# In[6]:
+# In[4]:
 
 
 df.dtypes
@@ -52,12 +52,23 @@ df.dtypes
 
 # There are a large number of columns that are unneccesary. There are duplicate columns for Date, Year, Month, Day, and Hour. There are also columns for location name, station id, units, and intervals of measurement that are not useful in analysis. For now we can leave these columns in. 
 
-# In[7]:
+# In[5]:
 
 
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 plt.rcParams["figure.figsize"] = [16,9]
+
+
+# In[6]:
+
+
+# Quickly output for speedml
+from sklearn.model_selection import train_test_split
+
+train, test = train_test_split(df, test_size=.3, random_state=0)
+train.to_csv("train.csv")
+test.to_csv("test.csv")
 
 
 # # Visualizing Features<a name="visualize"></a>
@@ -66,7 +77,7 @@ plt.rcParams["figure.figsize"] = [16,9]
 # 
 # When plotting the PM2.5 concentration by month you can clearly see that winter months have a much larger variation in pollution levels, including some very high levels.
 
-# In[8]:
+# In[7]:
 
 
 x = df['Month']
@@ -80,7 +91,7 @@ plt.show()
 
 # Looking at the value plot by hour you can see there are two spikes each day, one between 9-11AM and the other starting around 20 and continuing through the night until 4.
 
-# In[9]:
+# In[8]:
 
 
 x = df['Hour']
@@ -94,7 +105,7 @@ plt.show()
 
 # At higher windspeeds you notice a big drop in the recorded PM2.5 levels. It seems wind speed may be a good feature to predict PM2.5.
 
-# In[10]:
+# In[9]:
 
 
 x = df['SPD']
@@ -108,7 +119,7 @@ plt.show()
 
 # Make facet or subplot of PM2.5 levels by windspeed with one subplot per month. This will show if these lower measured values at low windspeeds are evenly distrbuted throughout the year or if they are mostly in certain months.
 
-# In[11]:
+# In[10]:
 
 
 # Create a dataframe for each month. Less thinking than slicing it for each visualization. Could do this with a function also
@@ -126,7 +137,7 @@ month11 = df[df.Month == 11]
 month12 = df[df.Month == 12]
 
 
-# In[12]:
+# In[11]:
 
 
 x = month1['SPD']
@@ -138,7 +149,7 @@ plt.title('PM2.5 by Windspeed - January')
 plt.show()
 
 
-# In[13]:
+# In[12]:
 
 
 x = month1['TEMP']
@@ -150,7 +161,7 @@ plt.title('PM2.5 by Temperature - January')
 plt.show()
 
 
-# In[14]:
+# In[13]:
 
 
 x = month1['TEMP']
@@ -162,13 +173,13 @@ plt.ylabel('Wind Speed')
 plt.title('PM2.5 > 100 by Temperature and Windspeed - January')
 
 
-# In[15]:
+# In[14]:
 
 
 plt.show()
 
 
-# In[16]:
+# In[15]:
 
 
 x = month1['TEMP']
@@ -181,7 +192,7 @@ plt.title('PM2.5 < 100 by Temperature and Windspeed - January')
 plt.show()
 
 
-# In[17]:
+# In[16]:
 
 
 x = month1['Hour']
@@ -194,7 +205,7 @@ plt.title('PM2.5 < 100 by Temperature and Hour - January')
 plt.show()
 
 
-# In[18]:
+# In[17]:
 
 
 x = month1['DIR']
@@ -235,7 +246,7 @@ plt.show()
 # 
 # To start, let's drop columns that clearly have no value as features.
 
-# In[19]:
+# In[18]:
 
 
 df.columns
@@ -243,7 +254,7 @@ df.columns
 
 # Source.Name, Site, Parameter, Unit, Duration, USAF, and WBAN are the same for every row, and as such are not useful features. These are site identifiers for the weather station, the duration of measurement (which is constant), and the unit of PM2.5 measurement (which is in milligrams per cubic meter).
 
-# In[20]:
+# In[19]:
 
 
 df = df.drop(['Source.Name', 'Site', 'Parameter', 'Unit', 'Duration', 'USAF', 'WBAN'], axis=1)
@@ -251,19 +262,19 @@ df = df.drop(['Source.Name', 'Site', 'Parameter', 'Unit', 'Duration', 'USAF', 'W
 
 # Date Key.1, Year.1, Month.1, Day.1, and Hour.1 are duplicates of the original date features. These were used to create the date key that was then used to combine the PM2.5 and weather data sets. Removing these will cause no harm.
 
-# In[21]:
+# In[20]:
 
 
 df = df.drop(['Date Key.1', 'Year.1', 'Month.1', 'Day.1', 'Hour.1'], axis=1)
 
 
-# In[22]:
+# In[21]:
 
 
 df.columns
 
 
-# The remaining fields are either 1) date fields, 2) PM2.5 values or their derived AQI values, and 3) weather data. As noted before we will only have a few features available for use in prediction. As such we will remove the rest. Below is an inventory of the available weather features. Those marked in bold will be removed
+# The remaining fields are either 1) date fields, 2) PM2.5 values or their derived AQI values, and 3) weather data. As noted before we will only have a few features available for use in prediction. As such we will remove the rest. Below is an inventory of the available weather features. Those marked in bold will be kept, all others will be removed.
 # 
 # - **DIR - WIND DIRECTION IN COMPASS DEGREES, 990 = VARIABLE, REPORTED AS** "***" WHEN AIR IS CALM (SPD WILL THEN BE 000)
 # - **SPD** & GUS = **WIND SPEED** & GUST IN MILES PER HOUR 
@@ -288,7 +299,7 @@ df.columns
 # - PCPXX = LIQUID PRECIP REPORT IN INCHES AND HUNDREDTHS
 # - SD = SNOW DEPTH IN INCHES  
 
-# In[23]:
+# In[22]:
 
 
 df = df.drop(['GUS', 'CLG', 'SKC', 'L', 'M', 'H', 'VSB', 'MW', 'MW_1', 'MW_2', 'MW_3', 'AW', 'AW_4', 'AW_5', 'AW_6', 'W', 'SLP', 'ALT', 'STP', 'MAX', 'MIN', 'PCP01', 'PCP06', 'PCP24', 'PCPXX', 'SD'], axis=1)
@@ -299,7 +310,7 @@ df.columns
 # 
 # There are two columns showing PM2.5, Value and AQI.Take a look at the first 20 rows of the dataframe.
 
-# In[24]:
+# In[23]:
 
 
 df.head(20)
@@ -307,7 +318,7 @@ df.head(20)
 
 # It appears that there is a lag between when the Value goes up or down and the corresponding AQI is changed. This may be because the AQI is calculated in a moving window or at the end of the stated period. Let's visualize these two columns to better understand.
 
-# In[25]:
+# In[24]:
 
 
 def value_aqi(date):
@@ -328,19 +339,19 @@ def value_aqi(date):
     return plt.show();
 
 
-# In[26]:
+# In[25]:
 
 
 value_aqi(month10[:24])
 
 
-# In[27]:
+# In[26]:
 
 
 value_aqi(month6[:24])
 
 
-# In[28]:
+# In[27]:
 
 
 value_aqi(month1[:24])
@@ -352,7 +363,7 @@ value_aqi(month1[:24])
 # 
 # At some times AQI and Value track very closely as would be expected. However at others (in month 10 of 2015 for example) there is a disconnect. As we only need one feature, and the Value field is labeled with a specific unit, we will drop AQI in favor of PM2.5 Value.
 
-# In[29]:
+# In[28]:
 
 
 df = df.drop(['AQI'], axis=1)
@@ -363,7 +374,7 @@ df.columns
 # 
 # Earlier we determined that hour of day and month were both possibly useful predictors, and as such we will keep them in our data. However Year, Day, Date Key aren't needed. We will turn the Date (LST) feature into a datetime feature later.
 
-# In[30]:
+# In[29]:
 
 
 df = df.drop(['Year', 'Day', 'Date Key'], axis=1)
@@ -374,7 +385,7 @@ df.columns
 # 
 # As there are several date features, we can reduce these to one canonical one that is in a format that is easily parseable by Python or other programs. Also let's rename the 'Date (LST)' column to simply Date, as spaces in columns aren't ideal.
 
-# In[31]:
+# In[30]:
 
 
 from datetime import datetime
@@ -385,7 +396,7 @@ df = df.rename(columns={"Date (LST)": "Date"})
 
 # Incidentally now that we have a properly formatted Date field we can plot a time series of PM2.5 values over the entire dataset. Considering the length of time this may be messy, but let's give it a go.
 
-# In[32]:
+# In[31]:
 
 
 def time_series(start, end):
@@ -399,7 +410,7 @@ def time_series(start, end):
     return plt.show();
 
 
-# In[33]:
+# In[32]:
 
 
 time_series('2015','2018')
@@ -407,7 +418,7 @@ time_series('2015','2018')
 
 # The following graph shows a good example of outliers. These would appear to be errors in the data. In the graph above they appear in roughly the middle of the graph.
 
-# In[34]:
+# In[33]:
 
 
 time_series('2016-09-04','2016-09-07')
@@ -418,7 +429,7 @@ time_series('2016-09-04','2016-09-07')
 # ## Handling outliers
 # Let's handle those outlier points. First lets take a look at the date range from the graph above.
 
-# In[35]:
+# In[34]:
 
 
 # Select the time frame from the graph above
@@ -427,7 +438,7 @@ df[['Date', 'Value']][(df['Date'] >= '2016-09-05 01') & (df['Date'] <= '2016-09-
 
 # It appears the two outlier values are both .985. Could this be a trend?
 
-# In[36]:
+# In[35]:
 
 
 df[['Date', 'Value']][(df['Value'] == .985)]
@@ -440,14 +451,14 @@ df[['Date', 'Value']][(df['Value'] == .985)]
 # 
 # Considering these things it is prudent to remove these outliers.
 
-# In[37]:
+# In[36]:
 
 
 # Check shape of dataframe to ensure that rows are dropped later
 df.shape
 
 
-# In[38]:
+# In[37]:
 
 
 df = df[df.Value != .985]
@@ -457,32 +468,32 @@ df.shape
 
 # Next up is the early part of the data set. Between 2015-09 and around the middle of 2015-10 the data appears to be unreliable. The data in this period does not follow what would be expected of pollution levels. This is the time when the pollution monitoring station was installed, so it is logical to belive that the station could have some calibration or other maintenance during this initial phase.
 
-# In[39]:
+# In[38]:
 
 
 time_series('2015-10','2016-2')
 
 
-# In[40]:
+# In[39]:
 
 
 time_series('2015','2015-10-25')
 
 
-# In[41]:
+# In[40]:
 
 
 time_series('2015','2015-10-20')
 
 
-# In[42]:
+# In[41]:
 
 
 # Select the time frame from the graph above
 df[['Date', 'Value']][(df['Date'] >= '2015') & (df['Date'] <= '2015-10-20')]
 
 
-# In[43]:
+# In[42]:
 
 
 print("Shape before: ", df.shape)
@@ -491,26 +502,26 @@ df = df[df.Date > '2015-10-20 01']
 print("Shape after: ", df.shape)
 
 
-# In[44]:
+# In[43]:
 
 
 time_series('2015-10-22','2015-10-22 23')
 
 
-# In[45]:
+# In[44]:
 
 
 # Select the time frame from the graph above
 df[['Date', 'Value']][(df['Date'] >= '2015-10-22 16') & (df['Date'] <= '2015-10-22 18')]
 
 
-# In[46]:
+# In[45]:
 
 
 df[['Date', 'Value']][(df['Value'] == .995)]
 
 
-# In[47]:
+# In[46]:
 
 
 print("Shape before: ", df.shape)
@@ -520,7 +531,7 @@ print("Shape after: ", df.shape)
 
 # After removing these outliers let's take a look at the full time series plot one more time.
 
-# In[48]:
+# In[47]:
 
 
 time_series('2015','2018')
@@ -536,14 +547,14 @@ time_series('2015','2018')
 # 3. Decide on a per feature (column) basis if/how to interpolate data for NaN records. 
 #     - Interpolating can be either a mean of previous and next values, a constant number, or some other method. 
 
-# In[49]:
+# In[48]:
 
 
 # Are there null values in our dataset?
 df.isnull().values.any()
 
 
-# In[50]:
+# In[49]:
 
 
 # Show rows where any cell has a NaN
@@ -556,7 +567,7 @@ df[df.isnull().any(axis=1)]
 # 2. Since we are predicting for the **Value** feature, any record with a NaN for Value should be removed.
 # 3. Currently less is known about **DIR, SPD, TEMP, DEWP**. Let's explore more and see.
 
-# In[51]:
+# In[50]:
 
 
 # 1. Check if Date, Month, or Hour have NaNs
@@ -565,13 +576,13 @@ print("Month contains nulls:", df.Month.isnull().values.any())
 print("Hour contains nulls:", df.Hour.isnull().values.any())
 
 
-# In[52]:
+# In[51]:
 
 
 df.shape
 
 
-# In[53]:
+# In[52]:
 
 
 # 2. Drop any row where Value is NaN
@@ -582,7 +593,7 @@ df[df['Value'].isnull()]
 
 # There are a total of 772 rows with NaNs in the Value column out of 14687. We can drop these.
 
-# In[54]:
+# In[53]:
 
 
 df = df.dropna(axis=0,subset=['Value'])
@@ -591,42 +602,42 @@ df.shape
 
 # For the next 4 features let's explore these a bit to see if there is a pattern to the NaNs so that they can be intelligently replaced.
 
-# In[55]:
+# In[54]:
 
 
 # Show rows where DIR is NaN
 df[df['DIR'].isnull()]
 
 
-# In[56]:
+# In[55]:
 
 
 # Show rows where SPD is NaN
 df[df['SPD'].isnull()]
 
 
-# In[57]:
+# In[56]:
 
 
 # Show rows where TEMP is NaN
 df[df['TEMP'].isnull()]
 
 
-# In[58]:
+# In[57]:
 
 
 # Show rows where DEWP is NaN
 df[df['DEWP'].isnull()]
 
 
-# In[59]:
+# In[58]:
 
 
 # Show rows where DEWP & TEMP is NaN
 df[df['DEWP'].isnull() & df['TEMP'].isnull()]
 
 
-# In[60]:
+# In[59]:
 
 
 # Show rows where DEWP & TEMP & DIR is NaN
@@ -635,14 +646,14 @@ df[df['DEWP'].isnull() & df['TEMP'].isnull() & df['DIR'].isnull()]
 
 # Considering the very small number of rows in DEWP and TEMP that have NaNs we can safely drop them. We will only lose 24 records from the data.
 
-# In[61]:
+# In[60]:
 
 
 df = df.dropna(axis=0,subset=['DEWP', 'TEMP'])
 df.shape
 
 
-# In[62]:
+# In[61]:
 
 
 df[df.DIR == 990]
@@ -662,7 +673,7 @@ df[df.DIR == 990]
 # 
 # Assuming that previous hours wind speed and dir values will have an impact on future pollution values using the previous value would seem to be logical. 
 
-# In[63]:
+# In[62]:
 
 
 df.describe()
@@ -670,7 +681,7 @@ df.describe()
 
 # Out of 13891 rows we have 1258 missing rows for SPD and 2849 missing rows for DIR. Next we will impute previous values to SPD and DIR.
 
-# In[64]:
+# In[63]:
 
 
 df = df.fillna(method='ffill')
@@ -678,7 +689,7 @@ df = df.fillna(method='ffill')
 
 # Using the forward fill method of filling built into Pandas is very convenient. Let's check to make sure we have all of the rows filled properly.
 
-# In[65]:
+# In[64]:
 
 
 df.describe()
@@ -686,7 +697,7 @@ df.describe()
 
 # It turns out we have one missing value for DIR. It happens to be the first row in our dataframe so the forward fill can't fill it. Let's drop the row.
 
-# In[66]:
+# In[65]:
 
 
 df = df.dropna(axis=0,subset=['DIR'])
@@ -694,7 +705,7 @@ df = df.dropna(axis=0,subset=['DIR'])
 
 # Now that we have handled all NaNs and we won't be removing any more data we can recreate the index.
 
-# In[67]:
+# In[66]:
 
 
 df = df.reset_index(drop=True)
@@ -704,7 +715,7 @@ df = df.reset_index(drop=True)
 
 # The DIR feature has many values of 990. These are obviously outside the 360 arc that makes a circle. The metadata for the weather data source (NOAA) says these 990 values indicate a variable wind direction. 
 
-# In[68]:
+# In[67]:
 
 
 df[df.DIR == 990]
@@ -712,7 +723,7 @@ df[df.DIR == 990]
 
 # More than half of our dataset has 990 in the DIR column. This is a challenge considering we aren't yet sure how wind speed impacts PM2.5 levels. Let's explore and see if we can determine an illeligent way to handle these values.
 
-# In[69]:
+# In[68]:
 
 
 x = df.DIR
@@ -725,7 +736,7 @@ plt.xlim(0, 990)
 plt.show()
 
 
-# In[70]:
+# In[69]:
 
 
 plt.hist(df.DIR[(df.DIR < 990) & (df.Value > .2)], 50)
@@ -754,7 +765,7 @@ plt.show()
 # 
 # For the 990 values we can simply assign them the value "V" for variable. Let's implement this
 
-# In[71]:
+# In[70]:
 
 
 pd.unique(df.DIR)
@@ -762,7 +773,7 @@ pd.unique(df.DIR)
 
 # We will create a dictionary of unique direction values and assign them to a cardinal direction. We will assign 990 to "V"
 
-# In[72]:
+# In[71]:
 
 
 cardinal_directions = {"DIR": {990: "V", 190: "S", 80: "E", 240: "WSW", 220: "SW", 
@@ -773,7 +784,7 @@ cardinal_directions = {"DIR": {990: "V", 190: "S", 80: "E", 240: "WSW", 220: "SW
 
 # Let's replace the number values with their corresponding cardinal directions.
 
-# In[73]:
+# In[72]:
 
 
 df.replace(cardinal_directions, inplace=True)
@@ -784,31 +795,31 @@ df.dtypes
 # 
 # We could simply assign a number to each cardinal direction, but this would again create the issue of having numbers that are larger not being properly represented as being close to the smaller number. Helpfully Pandas has a great method called get_dummies that will allow us to create a new feature for each direction. Then that record will receive a 0 or 1 whether it is that direction or not. The benefit of this is to eliminate the problem of this circular feature being represented linearly and to give the machine learning models a number to use when estimating.
 
-# In[74]:
+# In[73]:
 
 
 df.head(10)
 
 
-# In[75]:
+# In[74]:
 
 
 df = pd.concat([df, pd.get_dummies(df.DIR)], axis=1)
 
 
-# In[76]:
+# In[75]:
 
 
 df.columns
 
 
-# In[77]:
+# In[76]:
 
 
 df = df.drop(['DIR'], axis=1)
 
 
-# In[78]:
+# In[77]:
 
 
 df.dtypes
@@ -821,7 +832,7 @@ df.dtypes
 # The code and math behind this method comes from David Kaleko's blog on handling cyclical features. Similar methods have been found in other places but this is a great straightforward explanation showing the impact on model performance.
 # Link: http://blog.davidkaleko.com/feature-engineering-cyclical-features.html
 
-# In[79]:
+# In[78]:
 
 
 df['hr_sin'] = np.sin(df.Hour*(2.*np.pi/24))
@@ -832,7 +843,7 @@ df['month_cos'] = np.cos((df.Month-1)*(2.*np.pi/12))
 
 # Visualizing the features we created we can see they are now circular instead of linear. 
 
-# In[80]:
+# In[79]:
 
 
 df.plot.scatter('hr_sin','hr_cos').set_aspect('equal')
@@ -842,13 +853,13 @@ plt.show()
 
 # We no longer need the Month and Hour columns so we can safely drop them.
 
-# In[81]:
+# In[80]:
 
 
 df = df.drop(['Month', 'Hour'], axis=1)
 
 
-# In[82]:
+# In[81]:
 
 
 df.head(10)
@@ -858,14 +869,14 @@ df.head(10)
 
 # The US Embassy stores their PM2.5 values in mg/m^3. However when converting to the US EPA AQI standard the measurement used is µg/m^3. This is easy enough to convert by multiplying by 1,000. The purpose of this is to make it easy to display the results of the model and calculate AQI without any further computation.
 
-# In[83]:
+# In[82]:
 
 
 # 1 mg = 1,000 µg
 df['Value'] = df.Value * 1000
 
 
-# In[84]:
+# In[83]:
 
 
 df.head(5)
@@ -875,21 +886,21 @@ df.head(5)
 
 # The source of the weather data comes from NOAA, which stores temperatures and dew points in Fahrenheit. As our end user is more familiar with Celsius we will convert these features now to eliminate the need to when displaying to the user.
 
-# In[85]:
+# In[84]:
 
 
 # Formula to convert F to C is: [°C] = ([°F] - 32) × 5/9
 df['TEMP'] = (df.TEMP - 32) * 5.0/9.0
 
 
-# In[86]:
+# In[85]:
 
 
 # Formula to convert F to C is: [°C] = ([°F] - 32) × 5/9
 df['DEWP'] = (df.DEWP - 32) * 5.0/9.0
 
 
-# In[87]:
+# In[86]:
 
 
 df.head(5)
@@ -913,23 +924,43 @@ df.head(5)
 
 # Before we move to the training and evaluating the model we can finalize our dataframe. The only unneeded feature we have remaining is the Date feature. 
 
-# In[88]:
+# In[87]:
 
 
 df.head(5)
 
 
-# In[89]:
+# In[88]:
 
 
 df = df.drop(['Date'], axis=1)
 df.columns
 
 
-# In[90]:
+# In[89]:
 
 
 df.dtypes
+
+
+# In[159]:
+
+
+def plot_corr(df,size=10):
+    '''Function plots a graphical correlation matrix for each pair of columns in the dataframe.
+
+    Input:
+        df: pandas DataFrame
+        size: vertical and horizontal size of the plot'''
+
+    corr = df.corr()
+    fig, ax = plt.subplots(figsize=(size, size))
+    ax.matshow(corr)
+    plt.xticks(range(len(corr.columns)), corr.columns);
+    plt.yticks(range(len(corr.columns)), corr.columns);
+    plt.show();
+    
+plot_corr(df)
 
 
 # # Split into Training and Test Data
@@ -983,7 +1014,7 @@ X_test.shape, y_test.shape
 
 # Our predicted feature (y) is currently a continuous feature. This is what is required for the regression algorithms. However we also would like to apply classification algorithms to our data. This will require us to modify our Value (y) feature.
 
-# In[110]:
+# In[97]:
 
 
 y.head()
@@ -998,17 +1029,58 @@ y.head()
 # This is an easy to understand system for end users and also a good standard by which to base our classifier on. A few notes about the EPA AQI standard.
 # 
 # - The scale does not go above 500. As Ulaanbaatar PM2.5 pollution in fact does go above 500 regularly during winter months, we will need to handle this in some way.
-# - The PM2.5 measurement and AQI are different numbers. The measurement is placed against a scale that is used to identify the AQI.
+# - The PM2.5 measurement and AQI are different numbers. The measurement is placed against a scale that is used to identify the AQI in the chart above.
 # - AQI is a general scale that can combine multiple measures of air pollution. However in this case we will only be using PM2.5.
 
-# The official breakpoints between the categories has changed over time. We will be using the official 
+# The divider between the the AQI categories is called the breakpoint (or the end of the bin in other words). The breakpoint scale is the measurement of PM2.5 in µg/m^3. The official breakpoints between the categories has changed over time. We will be using the official breakpoints from the EPA. One thing to note is these breakpoints are used to derive the AQI value. We will be using them to simply assign the AQI category.
 
-# In[ ]:
+# | AQI Category | Low Breakpoint | High Breakpoint |
+# | :--------------: | :----------------: | :-----------------: |
+# | GOOD | 0 | 12 |
+# | MODERATE | 12.1 | 35.4 |
+# | UNHEALTHY FOR SENSITIVE | 35.5 | 55.4 |
+# | UNHEALTHY |55.5 | 150.4 |
+# | VERY UNHEALTHY | 150.5 | 250.4 |
+# | HAZARDOUS | 250.5 | 350.4 |
+# | HAZARDOUS | 350.5 | 500.4 |
+# 
+# Source: US EPA - https://aqs.epa.gov/aqsweb/documents/codetables/aqi_breakpoints.html
+
+# We will assign a numerical category to each AQI category from 1-5. Good being 1 and Hazardous being 6.
+
+# In[98]:
+
+
+# For our purposes hazardous is hazardous, no need to apply a different category.
+y_cat = pd.cut(df['Value'],[-50,12,35.4,55.4,150.4,250.4,1000],labels=[1,2,3,4,5,6])
+
+
+# Now we have a new dependent variable feature that is categorical. We can re-split our data using this new data set. 
+
+# In[99]:
+
+
+y_cat.dtypes
+
+
+# In[100]:
 
 
 from sklearn.model_selection import train_test_split
 
-X_train_cl, X_test_cl, y_train_cl, y_test_cl = train_test_split(X, y_cl, test_size=.3, random_state=0)
+X_train_cl, X_test_cl, y_train_cl, y_test_cl = train_test_split(X, y_cat, test_size=.3, random_state=0)
+
+
+# In[101]:
+
+
+X_train_cl.shape, y_train_cl.shape
+
+
+# In[102]:
+
+
+X_test_cl.shape, y_test_cl.shape
 
 
 # # Implement ML Algorithms
@@ -1033,37 +1105,38 @@ X_train_cl, X_test_cl, y_train_cl, y_test_cl = train_test_split(X, y_cl, test_si
 
 # ### Linear Regression
 
-# In[97]:
+# In[103]:
 
 
-from sklearn import linear_model
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Create linear regression object
-regr = linear_model.LinearRegression()
+regr = LinearRegression()
 
 
-# In[98]:
+# In[104]:
 
 
 # Train the model using the training sets
 regr.fit(X_train, y_train)
 
 
-# In[99]:
+# In[105]:
 
 
 # Make predictions using the testing set
 lin_pred = regr.predict(X_test)
 
 
-# In[100]:
+# In[106]:
 
 
-regr.score(X_test, y_test)
+linear_regression_score = regr.score(X_test, y_test)
+linear_regression_score
 
 
-# In[101]:
+# In[107]:
 
 
 # The coefficients
@@ -1078,7 +1151,7 @@ print("Mean absolute error: %.2f"
 print('R-squared: %.2f' % r2_score(y_test, lin_pred))
 
 
-# In[102]:
+# In[108]:
 
 
 plt.scatter(y_test, lin_pred)
@@ -1094,7 +1167,7 @@ plt.show()
 
 # ### Neural Network Regression
 
-# In[103]:
+# In[109]:
 
 
 from sklearn.neural_network import MLPRegressor
@@ -1104,28 +1177,29 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 mlp = MLPRegressor()
 
 
-# In[104]:
+# In[110]:
 
 
 # Train the model using the training sets
 mlp.fit(X_train, y_train)
 
 
-# In[105]:
+# In[111]:
 
 
 # Score the model
-mlp.score(X_test, y_test)
+neural_network_regression_score = mlp.score(X_test, y_test)
+neural_network_regression_score
 
 
-# In[106]:
+# In[112]:
 
 
 # Make predictions using the testing set
 nnr_pred = mlp.predict(X_test)
 
 
-# In[107]:
+# In[113]:
 
 
 # The coefficients
@@ -1140,7 +1214,7 @@ print("Mean absolute error: %.2f"
 print('R-squared: %.2f' % r2_score(y_test, nnr_pred))
 
 
-# In[108]:
+# In[114]:
 
 
 plt.scatter(y_test, nnr_pred)
@@ -1156,38 +1230,39 @@ plt.show()
 
 # ### Decision Forest
 
-# In[109]:
+# In[115]:
 
 
-from sklearn import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Create Random Forrest Regressor object
 regr_rf = RandomForestRegressor(n_estimators=100)
 
 
-# In[ ]:
+# In[116]:
 
 
 # Train the model using the training sets
 regr_rf.fit(X_train, y_train)
 
 
-# In[ ]:
+# In[117]:
 
 
 # Score the model
-regr_rf.score(X_test, y_test)
+decision_forest_score = regr_rf.score(X_test, y_test)
+decision_forest_score
 
 
-# In[ ]:
+# In[118]:
 
 
 # Make predictions using the testing set
 regr_rf_pred = regr_rf.predict(X_test)
 
 
-# In[ ]:
+# In[119]:
 
 
 plt.scatter(y_test, regr_rf_pred)
@@ -1199,7 +1274,7 @@ plt.show()
 
 # ### Decision Tree + AdaBoost
 
-# In[ ]:
+# In[120]:
 
 
 from sklearn.tree import DecisionTreeRegressor
@@ -1212,7 +1287,7 @@ tree_1 = DecisionTreeRegressor()
 tree_2 = AdaBoostRegressor(DecisionTreeRegressor(), n_estimators=600, learning_rate=.1)
 
 
-# In[ ]:
+# In[121]:
 
 
 # Train the model using the training sets
@@ -1220,21 +1295,22 @@ tree_1.fit(X_train, y_train)
 tree_2.fit(X_train, y_train)
 
 
-# In[ ]:
+# In[122]:
 
 
 # Score the decision tree model
 tree_1.score(X_test, y_test)
 
 
-# In[ ]:
+# In[123]:
 
 
 # Score the boosted decision tree model
-tree_2.score(X_test, y_test)
+boosted_tree_score = tree_2.score(X_test, y_test)
+boosted_tree_score
 
 
-# In[ ]:
+# In[124]:
 
 
 # Make predictions using the testing set
@@ -1242,7 +1318,7 @@ tree_1_pred = tree_1.predict(X_test)
 tree_2_pred = tree_2.predict(X_test)
 
 
-# In[ ]:
+# In[125]:
 
 
 plt.scatter(y_test, tree_1_pred)
@@ -1252,7 +1328,7 @@ plt.title('Decision Tree Predicted vs Actual')
 plt.show()
 
 
-# In[ ]:
+# In[126]:
 
 
 plt.scatter(y_test, tree_2_pred)
@@ -1266,34 +1342,290 @@ plt.show()
 
 # ### Multiclass neural network
 
+# In[127]:
+
+
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import confusion_matrix
+
+# Create MLPClassifier object
+mlp_cl = MLPClassifier(activation='logistic', random_state=1234)
+
+
+# In[128]:
+
+
+# Train the model using the training sets
+mlp_cl.fit(X_train_cl, y_train_cl)
+
+
+# In[129]:
+
+
+# Score the model
+multiclass_neural_network_score = mlp_cl.score(X_test_cl, y_test_cl)
+multiclass_neural_network_score
+
+
+# In[130]:
+
+
+# Make predictions using the testing set
+mnn_pred = mlp_cl.predict(X_test_cl)
+
+
+# In[131]:
+
+
+# Calculate probabilities
+mnn_prob = mlp_cl.predict_proba(X_test_cl)
+
+
+# In[132]:
+
+
+# Calculate confusion matrix
+confusion_mnn = confusion_matrix(y_test_cl,mnn_pred)
+
+
+# In[133]:
+
+
+confusion_mnn
+
+
+# In[134]:
+
+
+columns = ['Good','Moderate','Unhealthy for Sensitive','Unhealthy','Very Unhealthy','Hazardous']
+
+plt.imshow(confusion_mnn, cmap=plt.cm.Blues, interpolation='nearest')
+plt.xticks([0,1,2,3,4,5], columns, rotation='vertical')
+plt.yticks([0,1,2,3,4,5], columns)
+plt.colorbar()
+
+plt.show()
+
+
 # ### Multiclass logistic regression
 
-# ### Multiclass decision forest
+# In[135]:
 
-# ### Multiclass decision jungle
+
+from sklearn.linear_model import LogisticRegression
+
+# Create logistic regression object
+log_regr = LogisticRegression()
+
+
+# In[136]:
+
+
+# Train the model using the training sets
+log_regr.fit(X_train_cl, y_train_cl)
+
+
+# In[137]:
+
+
+# Score the model
+logistic_regression_score = log_regr.score(X_test_cl, y_test_cl)
+logistic_regression_score
+
+
+# In[138]:
+
+
+# Make predictions using the testing set
+log_regr_pred = log_regr.predict(X_test_cl)
+
+
+# In[139]:
+
+
+# Calculate probabilities
+log_regr_prob = log_regr.predict_proba(X_test_cl)
+
+
+# In[140]:
+
+
+# Calculate confusion matrix
+confusion_log_regr = confusion_matrix(y_test_cl, log_regr_pred)
+
+
+# In[141]:
+
+
+confusion_log_regr
+
+
+# In[142]:
+
+
+columns = ['Good','Moderate','Unhealthy for Sensitive','Unhealthy','Very Unhealthy','Hazardous']
+
+plt.imshow(confusion_log_regr, cmap=plt.cm.Blues, interpolation='nearest')
+plt.xticks([0,1,2,3,4,5], columns, rotation='vertical')
+plt.yticks([0,1,2,3,4,5], columns)
+plt.colorbar()
+
+plt.show()
+
+
+# ### Random forest
+
+# In[143]:
+
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+# Create Random Forrest Regressor object
+cl_rf = RandomForestClassifier()
+
+
+# In[144]:
+
+
+# Train the model using the training sets
+cl_rf.fit(X_train_cl, y_train_cl)
+
+
+# In[145]:
+
+
+# Score the model
+cl_rf_score = log_regr.score(X_test_cl, y_test_cl)
+cl_rf_score
+
+
+# In[146]:
+
+
+# Make predictions using the testing set
+cl_rf_pred = cl_rf.predict(X_test_cl)
+
+
+# In[147]:
+
+
+# Calculate confusion matrix
+confusion_cl_rf = confusion_matrix(y_test_cl, cl_rf_pred)
+
+
+# In[148]:
+
+
+confusion_cl_rf
+
+
+# In[149]:
+
+
+columns = ['Good','Moderate','Unhealthy for Sensitive','Unhealthy','Very Unhealthy','Hazardous']
+
+plt.imshow(confusion_cl_rf, cmap=plt.cm.Blues, interpolation='nearest')
+plt.xticks([0,1,2,3,4,5], columns, rotation='vertical')
+plt.yticks([0,1,2,3,4,5], columns)
+plt.colorbar()
+
+plt.show()
+
+
+# ### Decision Tree
+
+# In[150]:
+
+
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+
+# In[151]:
+
+
+# Create decision tree object with adaboost
+
+tree_cl = AdaBoostClassifier(DecisionTreeClassifier(), n_estimators=600, learning_rate=.1)
+
+
+# In[152]:
+
+
+# Train the model using the training sets
+tree_cl.fit(X_train_cl, y_train_cl)
+
+
+# In[153]:
+
+
+# Score the decision tree model
+tree_cl_score = tree_cl.score(X_test_cl, y_test_cl)
+tree_cl_score
+
+
+# In[154]:
+
+
+# Make predictions using the testing set
+tree_cl_pred = tree_cl.predict(X_test_cl)
+
+
+# In[155]:
+
+
+# Calculate confusion matrix
+confusion_tree_cl = confusion_matrix(y_test_cl, tree_cl_pred)
+
+
+# In[156]:
+
+
+confusion_tree_cl
+
+
+# In[157]:
+
+
+columns = ['Good','Moderate','Unhealthy for Sensitive','Unhealthy','Very Unhealthy','Hazardous']
+
+plt.imshow(confusion_tree_cl, cmap=plt.cm.Blues, interpolation='nearest')
+plt.xticks([0,1,2,3,4,5], columns, rotation='vertical')
+plt.yticks([0,1,2,3,4,5], columns)
+plt.colorbar()
+
+plt.show()
+
 
 # # Evaluate Models
 
 # Let's compare all of our models scores. The regression and classification models are scored differently, with regression using r-squared and the classification models using an accuracy score. We can at the very least compare models of the same type.
 
-# In[ ]:
+# In[158]:
 
 
 print("Regression models:")
-print("Linear regression score: ", regr.score(X_test, y_test))
-print("Neural network regression score: ", mlp.score(X_test, y_test))
-print("Decision forest score: ", regr_rf.score(X_test, y_test))
-print("Boosted decision tree score: ", tree_2.score(X_test, y_test))
-print(" ")
+print("Linear regression score: ", linear_regression_score)
+print("Neural network regression score: ", neural_network_regression_score)
+print("Decision forest score: ", decision_forest_score)
+print("Boosted decision tree score: ", boosted_tree_score)
+print("\n")
 print("Classification models:")
-print("Multiclass neural network score: ")
-print("Multiclass logitic regression score: ")
-print("Multiclass decision forest score: ")
-print("Multiclass decision jungle score: ")
+print("Multiclass neural network score: ", multiclass_neural_network_score)
+print("Multiclass logistic regression score: ", cl_rf_score)
+print("Multiclass decision forest score: ", decision_forest_score)
+print("Multiclass decision jungle score: ", tree_cl_score)
 
 
-# # To Do 
-# 2. Predict specific value or should we predict category?
-# 4. Separate into training and test data
-# 5. Evaluate which model will best fit data.
-# 6. Redo visualizations to be cleaner and give explanations
+# # Observations
+# 
+# - The best model is the multiclass neural network. 
+# - Overall performance was quite poor for all of our models
+# - We have not completed any hyperparameter tuning. This can be done in the next 
+# - Our exploratory data analysis was mostly done through graphing and manual observation. Next steps would be to use more rigorous methods of exploration such as correlation, crosstabs, etc. 
+# - Our direction feature is probably too granular. We have 17 classes of direction. However no connection between direction that are close to each other exist. 
+# - We identified a few outlier points, however the range of the value feature is quite large and is a good candidate for further processing.
+# - Our current data set ignores previous hours conditions and its impact on the current PM2.5 level.
+# 
+# Will address these observations in next draft.
