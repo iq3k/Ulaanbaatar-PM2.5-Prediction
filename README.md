@@ -8,8 +8,8 @@ This project aims to predict PM2.5 levels in Ulaanbaatar, the capital city of Mo
 Several machine learning models were tested. A random forest regression model was selected. A full write up of the project can be found on Medium in four parts:
 - [Part 1, Introduction to the problem and some sollutions](https://medium.com/roberts-data-stories/ulaanbaatar-air-pollution-part-1-35e17c83f70b)
 - [Part 2, Exploring the data](https://medium.com/mongolian-data-stories/air-pollution-part-2-f9f4da33a1bd)
-- Part 3, The machine learning model
-- Part 4, Deployment
+- [Part 3, The machine learning model](https://medium.com/mongolian-data-stories/part-3-the-model-b2fb9a25a07c)
+- [Part 4, Deployment](https://medium.com/mongolian-data-stories/predicting-pm2-5-using-machine-learning-part-4-deployment-54086b5354d1)
 
 The goal of this project is to provide citizens of Ulaanbaatar a tool to use in protecting themselves and their families from air pollution. In testing our RMSE was 28 (scale is 0-500). This is sufficient to enable the prediction of the AQI category.
 
@@ -22,7 +22,7 @@ Weather data was obtained from NOAA at their global hourly data access tool [lin
 ## Production Model
 The production machine learning model has been deployed on Microsofts's Azure ML platform. The model has been published to the Studio Gallery and can be found [here](https://gallery.cortanaintelligence.com/Experiment/UB-PM2-5-Regression-2).
 
-Live predictions can be found at: 
+Live predictions can be found at: [PM25.mn](https://pm25.mn)
 
 
 Big thanks to Amarbayan for writing the backend scripts, database management architecture, and assisting with making the front end site.
