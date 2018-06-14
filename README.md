@@ -6,7 +6,7 @@ _Live model now at:_ [PM25.mn](https://pm25.mn)
 This project aims to predict PM2.5 levels in Ulaanbaatar, the capital city of Mongolia. Ulaanbaatar is the coldest capital city on the planet and also has some of the worst pollution. It's location in a valley and lack of infrastructure mean that the majority of the population use raw coal for heat and cooking during the long and severe winter. 
 
 Several machine learning models were tested. A random forest regression model was selected. A full write up of the project can be found on Medium in four parts:
-- [Part 1, Introduction to the problem and some sollutions](https://medium.com/roberts-data-stories/ulaanbaatar-air-pollution-part-1-35e17c83f70b)
+- [Part 1, Introduction to the problem and some solutions](https://medium.com/roberts-data-stories/ulaanbaatar-air-pollution-part-1-35e17c83f70b)
 - [Part 2, Exploring the data](https://medium.com/mongolian-data-stories/air-pollution-part-2-f9f4da33a1bd)
 - [Part 3, The machine learning model](https://medium.com/mongolian-data-stories/part-3-the-model-b2fb9a25a07c)
 - [Part 4, Deployment](https://medium.com/mongolian-data-stories/predicting-pm2-5-using-machine-learning-part-4-deployment-54086b5354d1)
