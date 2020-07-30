@@ -1,6 +1,6 @@
 # Predicting PM2.5 Pollution in Ulaanbaatar
 
-_Live model now at:_ [PM25.mn](https://pm25.mn)
+**Update:** This model is somewhat out of date, but the exploration is still valuable. Hopefully going forward I will be able to develop a tool to forecast UB's pollution around the city. If you are interested please let me know.
 
 ## Introduction
 This project aims to predict PM2.5 levels in Ulaanbaatar, the capital city of Mongolia. Ulaanbaatar is the coldest capital city on the planet and also has some of the worst pollution. It's location in a valley and lack of infrastructure mean that the majority of the population use raw coal for heat and cooking during the long and severe winter. 
