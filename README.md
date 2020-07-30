@@ -22,7 +22,6 @@ Weather data was obtained from NOAA at their global hourly data access tool [lin
 ## Production Model
 The production machine learning model has been deployed on Microsofts's Azure ML platform. The model has been published to the Studio Gallery and can be found [here](https://gallery.cortanaintelligence.com/Experiment/UB-PM2-5-Regression-2).
 
-Live predictions can be found at: [PM25.mn](https://pm25.mn)
 
 
 Big thanks to Amarbayan for writing the backend scripts, database management architecture, and assisting with making the front end site.
